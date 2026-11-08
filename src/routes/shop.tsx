@@ -3,9 +3,10 @@ import { ProductCard } from "@/components/ProductCard";
 import { CATEGORIES, PRODUCTS } from "@/lib/products";
 
 export const Route = createFileRoute("/shop")({
-  validateSearch: (s: Record<string, unknown>): { cat?: string } => ({
-    cat: typeof s.cat === "string" ? s.cat : undefined,
-  }),
+  validateSearch: (s: Record<string, unknown>): { cat?: string } => {
+    const cat = s["cat"];
+    return typeof cat === "string" ? { cat } : {};
+  },
   head: () => ({
     meta: [
       { title: "Shop All Jewellery — SHREE JI" },
