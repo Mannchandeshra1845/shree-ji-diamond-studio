@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Catalog lives in src/lib/products.ts and cart/wishlist in src/lib/store.ts (localStorage via useSyncExternalStore); no backend yet, so orders are not saved anywhere.
