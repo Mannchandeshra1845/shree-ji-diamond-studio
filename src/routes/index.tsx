@@ -58,7 +58,7 @@ function Index() {
 
   const tabs = ["All", ...CATEGORIES.map((x) => x.name)];
   const list = tab === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === tab);
-  const conf = CONFIDENCE[c];
+  const conf = CONFIDENCE[c] as (typeof CONFIDENCE)[number];
 
   return (
     <div>
