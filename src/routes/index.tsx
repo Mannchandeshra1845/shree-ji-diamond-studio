@@ -70,7 +70,7 @@ function Index() {
             <div className="hero-overlay absolute inset-0" />
             <div className="absolute inset-x-0 bottom-20 px-6 text-center text-primary-foreground">
               <p className="text-sm font-medium uppercase tracking-[0.3em]">Shree Ji Exclusive</p>
-              <h1 className="mt-3 text-5xl font-bold tracking-wide md:text-6xl">{s.title}</h1>
+              <h1 className="mt-3 text-[2.6rem] font-bold leading-tight tracking-wide md:text-6xl">{s.title}</h1>
               <p className="mx-auto mt-3 max-w-md text-base">{s.sub}</p>
               <Link to="/shop" className="mt-6 inline-block border border-primary-foreground px-8 py-3 text-sm uppercase tracking-[0.3em]">
                 {s.cta}

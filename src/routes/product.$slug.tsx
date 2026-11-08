@@ -67,7 +67,7 @@ function ProductPage() {
             <p className="flex items-baseline gap-3">
               <span className="text-2xl text-muted-foreground line-through">{inr(p.mrp)}</span>
               <span className="text-4xl font-semibold">{inr(p.price)}</span>
-              <span className="text-sm font-semibold text-badge">{off}% OFF</span>
+              <span className="whitespace-nowrap text-sm font-semibold text-badge">{off}% OFF</span>
             </p>
             <p className="mt-1 font-serif text-muted-foreground">Inclusive of all taxes</p>
           </div>
