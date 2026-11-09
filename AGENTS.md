@@ -30,4 +30,8 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
-- Catalog lives in src/lib/products.ts and cart/wishlist in src/lib/store.ts (localStorage via useSyncExternalStore); no backend yet, so orders are not saved anywhere.
+- Catalog lives in the `products` table (read via `productsQuery` in src/lib/products.ts, preloaded in the root loader); built-in photos are stored as `asset:<name>` keys so bundled images still resolve.
+- Cart/wishlist stay in src/lib/store.ts (localStorage) so shoppers need no account.
+- Orders are created only by the `placeOrder` server function, which re-reads prices from the database so customers cannot change totals; the customer then sends the order text to the store's WhatsApp (number in `store_settings`).
+- Admin access is the `admin` row in `user_roles` (auto-assigned to the owner email on confirmed sign-in); /admin is client-only and all admin data is protected by RLS.
+- Product photos live in a private bucket (public buckets are blocked by workspace policy), so uploads store a 10-year signed link.

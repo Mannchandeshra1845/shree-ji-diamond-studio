@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { getProduct, inr } from "@/lib/products";
+import { computeTotals } from "@/lib/order";
+import { inr, useProducts } from "@/lib/products";
 import { actions, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/cart")({
@@ -20,23 +20,15 @@ export const Route = createFileRoute("/cart")({
 
 function Cart() {
   const { cart } = useStore();
-  const [placed, setPlaced] = useState(false);
+  const { products, isLoading } = useProducts();
   const lines = cart.flatMap((i) => {
-    const p = getProduct(i.slug);
+    const p = products.find((x) => x.slug === i.slug);
     return p ? [{ ...i, p }] : [];
   });
-  const subtotal = lines.reduce((s, l) => s + l.p.price * l.qty, 0);
-  const discount = subtotal >= 1500 ? Math.round(subtotal * 0.05) : 0;
-  const total = subtotal - discount;
+  const { subtotal, discount, total } = computeTotals(lines.map((l) => ({ price: l.p.price, qty: l.qty })));
 
-  if (placed) {
-    return (
-      <div className="px-6 py-24 text-center">
-        <p className="font-serif text-3xl">Thank you! 🎉</p>
-        <p className="mt-3 text-muted-foreground">Your order has been received. We'll contact you shortly to confirm.</p>
-        <Link to="/shop" className="mt-8 inline-block border-2 border-primary px-10 py-3 font-serif uppercase tracking-widest">Continue shopping</Link>
-      </div>
-    );
+  if (isLoading && cart.length > 0) {
+    return <p className="py-24 text-center font-serif text-muted-foreground">Loading your bag…</p>;
   }
 
   if (lines.length === 0) {
@@ -80,15 +72,12 @@ function Cart() {
         <div className="flex justify-between"><span>Shipping</span><span>Free</span></div>
         <div className="flex justify-between border-t border-border pt-3 text-lg font-semibold"><span>Total</span><span>{inr(total)}</span></div>
       </div>
-      <button
-        onClick={() => {
-          actions.clearCart();
-          setPlaced(true);
-        }}
-        className="mt-6 h-14 w-full rounded-full bg-primary font-serif uppercase tracking-[0.15em] text-primary-foreground"
+      <Link
+        to="/checkout"
+        className="mt-6 grid h-14 w-full place-items-center rounded-full bg-primary font-serif uppercase tracking-[0.15em] text-primary-foreground"
       >
-        Place order
-      </button>
+        Checkout
+      </Link>
     </div>
   );
 }

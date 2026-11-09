@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProductCard } from "@/components/ProductCard";
-import { PRODUCTS } from "@/lib/products";
+import { useProducts } from "@/lib/products";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/wishlist")({
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/wishlist")({
 
 function Wishlist() {
   const { wishlist } = useStore();
+  const { products: PRODUCTS } = useProducts();
   const list = PRODUCTS.filter((p) => wishlist.includes(p.slug));
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">

@@ -2,12 +2,14 @@ import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-ro
 import { Award, Heart, Share2, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { useState } from "react";
 import { FlatBadge, ProductCard } from "@/components/ProductCard";
-import { PRODUCTS, getProduct, inr } from "@/lib/products";
+import { toast } from "sonner";
+import { inr, productsQuery, useProducts } from "@/lib/products";
 import { actions, useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
-    const product = getProduct(params.slug);
+  loader: async ({ params, context }) => {
+    const list = await context.queryClient.ensureQueryData(productsQuery);
+    const product = list.find((x) => x.slug === params.slug);
     if (!product) throw notFound();
     return { product };
   },
@@ -43,6 +45,7 @@ function ProductPage() {
   const [added, setAdded] = useState(false);
   const wished = wishlist.includes(p.slug);
   const off = Math.round((1 - p.price / p.mrp) * 100);
+  const { products: PRODUCTS } = useProducts();
   const related = PRODUCTS.filter((x) => x.slug !== p.slug).slice(0, 4);
 
   const share = async () => {
@@ -107,6 +110,7 @@ function ProductPage() {
               actions.addToCart(p.slug);
               setAdded(true);
               setTimeout(() => setAdded(false), 1400);
+              toast.success(`${p.name} added to bag`, { action: { label: "View bag", onClick: () => navigate({ to: "/cart" }) } });
             }}
             className="h-14 flex-1 rounded-full border-2 border-primary font-serif uppercase tracking-[0.15em] disabled:opacity-50"
           >
@@ -116,7 +120,7 @@ function ProductPage() {
             disabled={p.soldOut}
             onClick={() => {
               actions.addToCart(p.slug);
-              navigate({ to: "/cart" });
+              navigate({ to: "/checkout" });
             }}
             className="h-14 flex-1 rounded-full bg-primary font-serif uppercase tracking-[0.15em] text-primary-foreground disabled:opacity-50"
           >

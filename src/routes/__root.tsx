@@ -13,6 +13,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav, SiteFooter, SiteHeader } from "@/components/SiteChrome";
+import { Toaster } from "@/components/ui/sonner";
+import { productsQuery } from "@/lib/products";
 
 function NotFoundComponent() {
   return (
@@ -104,6 +106,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+  // Load the catalogue once for every page; if it fails here the pages fetch it in the browser.
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQuery).catch(() => null),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -136,6 +140,7 @@ function RootComponent() {
         <SiteFooter />
       </main>
       <BottomNav />
+      <Toaster position="top-center" />
     </QueryClientProvider>
   );
 }
