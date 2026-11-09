@@ -159,7 +159,7 @@ function Checkout() {
         >
           {busy ? "Placing order…" : "Place order"}
         </button>
-        <p className="text-center text-xs text-muted-foreground">Cash on delivery / payment details will be shared on WhatsApp.</p>
+        <p className="text-center text-xs text-muted-foreground">Payment details will be shared with you on WhatsApp.</p>
       </form>
     </div>
   );

@@ -28,6 +28,7 @@ function Account() {
         <li><Link to="/wishlist" className="flex items-center gap-3 p-5 font-serif"><Heart className="h-5 w-5 text-gold" /> Wishlist</Link></li>
         <li><a href="mailto:hello@shreeji.in" className="flex items-center gap-3 p-5 font-serif"><Mail className="h-5 w-5 text-gold" /> Contact Us</a></li>
       </ul>
+      <Link to="/admin" className="mt-10 inline-block text-sm text-muted-foreground underline">Store admin login</Link>
     </div>
   );
 }
