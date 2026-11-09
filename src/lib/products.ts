@@ -1,4 +1,5 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { rootRouteId, useLoaderData } from "@tanstack/react-router";
 import bamboo from "@/assets/p-bamboo.jpg";
 import studs from "@/assets/p-studs.jpg";
 import cuff from "@/assets/p-cuff.jpg";
@@ -91,7 +92,9 @@ export const productsQuery = queryOptions({
 });
 
 export function useProducts() {
-  const { data, isLoading } = useQuery(productsQuery);
+  // The root loader's copy travels from the server to the browser, so the first render matches.
+  const initial = useLoaderData({ from: rootRouteId }) as Product[] | null | undefined;
+  const { data, isLoading } = useQuery({ ...productsQuery, initialData: initial ?? undefined });
   return { products: data ?? [], isLoading };
 }
 
