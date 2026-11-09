@@ -5,7 +5,7 @@ import heroBangles from "@/assets/hero-bangles.jpg";
 import heroModel from "@/assets/hero-model.jpg";
 import heroCuff from "@/assets/p-cuff.jpg";
 import { ProductCard } from "@/components/ProductCard";
-import { CATEGORIES, PRODUCTS } from "@/lib/products";
+import { CATEGORIES, useProducts } from "@/lib/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,6 +56,7 @@ function Index() {
     return () => clearInterval(t);
   }, []);
 
+  const { products: PRODUCTS } = useProducts();
   const tabs = ["All", ...CATEGORIES.map((x) => x.name)];
   const list = tab === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === tab);
   const conf = CONFIDENCE[c] as (typeof CONFIDENCE)[number];

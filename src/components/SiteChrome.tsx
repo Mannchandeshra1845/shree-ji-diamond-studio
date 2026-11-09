@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { AtSign, Grid3x3, Heart, Home, Mail, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useState } from "react";
-import { CATEGORIES, PRODUCTS, inr } from "@/lib/products";
+import { CATEGORIES, inr, useProducts } from "@/lib/products";
 import { useStore } from "@/lib/store";
 
 export function Logo() {
@@ -18,6 +18,7 @@ export function SiteHeader() {
   const [search, setSearch] = useState(false);
   const [q, setQ] = useState("");
   const { cart } = useStore();
+  const { products: PRODUCTS } = useProducts();
   const count = cart.reduce((s, i) => s + i.qty, 0);
   const results = q.trim()
     ? PRODUCTS.filter((p) => (p.name + " " + p.category).toLowerCase().includes(q.trim().toLowerCase().replace(/s$/, "")))

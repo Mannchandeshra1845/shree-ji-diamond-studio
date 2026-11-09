@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProductCard } from "@/components/ProductCard";
-import { CATEGORIES, PRODUCTS } from "@/lib/products";
+import { CATEGORIES, useProducts } from "@/lib/products";
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (s: Record<string, unknown>): { cat?: string } => {
@@ -22,6 +22,7 @@ export const Route = createFileRoute("/shop")({
 
 function Shop() {
   const { cat } = Route.useSearch();
+  const { products: PRODUCTS } = useProducts();
   const list = cat ? PRODUCTS.filter((p) => p.category === cat) : PRODUCTS;
   const chip = (active: boolean) =>
     `shrink-0 border px-5 py-2.5 font-serif text-xs uppercase tracking-[0.2em] ${active ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground"}`;
