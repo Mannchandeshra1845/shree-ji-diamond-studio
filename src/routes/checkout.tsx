@@ -59,12 +59,12 @@ function Checkout() {
         data: {
           name: f.name ?? "",
           phone: f.phone ?? "",
-          email: f.email,
+          email: f.email ?? "",
           address: f.address ?? "",
           city: f.city ?? "",
           state: f.state ?? "",
           pincode: f.pincode ?? "",
-          notes: f.notes,
+          notes: f.notes ?? "",
           items: lines.map((l) => ({ slug: l.slug, qty: l.qty })),
         },
       });
@@ -76,7 +76,7 @@ function Checkout() {
         city: f.city ?? "",
         state: f.state ?? "",
         pincode: f.pincode ?? "",
-        notes: f.notes,
+        notes: f.notes ?? "",
         lines: res.lines,
         subtotal: res.subtotal,
         discount: res.discount,
