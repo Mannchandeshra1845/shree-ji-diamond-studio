@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { type Product, inr } from "@/lib/products";
 import { actions, useStore } from "@/lib/store";
 
@@ -16,6 +17,7 @@ export function ProductCard({ p }: { p: Product }) {
   const { wishlist } = useStore();
   const wished = wishlist.includes(p.slug);
   const [added, setAdded] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="group">
@@ -37,6 +39,7 @@ export function ProductCard({ p }: { p: Product }) {
             actions.addToCart(p.slug);
             setAdded(true);
             setTimeout(() => setAdded(false), 1400);
+            toast.success(`${p.name} added to bag`, { action: { label: "View bag", onClick: () => navigate({ to: "/cart" }) } });
           }}
           className="absolute bottom-3 right-3 rounded-full bg-background/90 px-3 py-2 font-serif text-xs uppercase tracking-wide text-foreground shadow-sm disabled:text-muted-foreground"
         >
