@@ -14,16 +14,159 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          customer_name: string
+          discount: number
+          email: string | null
+          id: string
+          items: Json
+          notes: string | null
+          order_no: number
+          phone: string
+          pincode: string
+          state: string
+          status: string
+          subtotal: number
+          total: number
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          customer_name: string
+          discount?: number
+          email?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          order_no?: never
+          phone: string
+          pincode: string
+          state: string
+          status?: string
+          subtotal: number
+          total: number
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          customer_name?: string
+          discount?: number
+          email?: string | null
+          id?: string
+          items?: Json
+          notes?: string | null
+          order_no?: never
+          phone?: string
+          pincode?: string
+          state?: string
+          status?: string
+          subtotal?: number
+          total?: number
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string
+          mrp: number
+          name: string
+          price: number
+          rating: number
+          reviews: number
+          slug: string
+          sold_out: boolean
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          mrp: number
+          name: string
+          price: number
+          rating?: number
+          reviews?: number
+          slug: string
+          sold_out?: boolean
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string
+          mrp?: number
+          name?: string
+          price?: number
+          rating?: number
+          reviews?: number
+          slug?: string
+          sold_out?: boolean
+        }
+        Relationships: []
+      }
+      store_settings: {
+        Row: {
+          id: number
+          updated_at: string
+          whatsapp_number: string
+        }
+        Insert: {
+          id?: number
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Update: {
+          id?: number
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +293,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
