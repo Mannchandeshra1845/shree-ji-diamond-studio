@@ -94,7 +94,7 @@ export const productsQuery = queryOptions({
 export function useProducts() {
   // The root loader's copy travels from the server to the browser, so the first render matches.
   const initial = useLoaderData({ from: rootRouteId }) as Product[] | null | undefined;
-  const { data, isLoading } = useQuery({ ...productsQuery, initialData: initial ?? undefined });
+  const { data, isLoading } = useQuery(initial ? { ...productsQuery, initialData: initial } : productsQuery);
   return { products: data ?? [], isLoading };
 }
 

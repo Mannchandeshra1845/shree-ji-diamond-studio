@@ -314,7 +314,10 @@ function Settings() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const n = String(new FormData(e.currentTarget).get("whatsapp") ?? "").trim();
-    if (whatsappDigits(n).length < 11) return toast.error("Enter a full WhatsApp number");
+    if (whatsappDigits(n).length < 11) {
+      toast.error("Enter a full WhatsApp number");
+      return;
+    }
     setBusy(true);
     const { error } = await supabase.from("store_settings").update({ whatsapp_number: n, updated_at: new Date().toISOString() }).eq("id", 1);
     setBusy(false);
