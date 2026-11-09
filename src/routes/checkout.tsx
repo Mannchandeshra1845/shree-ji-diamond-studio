@@ -48,7 +48,10 @@ function Checkout() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const f = Object.fromEntries(new FormData(e.currentTarget)) as {
+      name?: string; phone?: string; email?: string; address?: string;
+      city?: string; state?: string; pincode?: string; notes?: string;
+    };
     setBusy(true);
     setError("");
     try {
