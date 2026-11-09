@@ -81,6 +81,7 @@ function Checkout() {
       });
       actions.clearCart();
       setDone({ orderNo: res.orderNo, link: whatsappLink(res.whatsapp, msg) });
+      window.scrollTo({ top: 0 });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong, please try again");
     } finally {
